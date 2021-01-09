@@ -4,6 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import './assets/reset.css'
+import './assets/icons/iconfont.css'
+
+// Element-ui
+import Element from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(Element)
+
 //引入axios
 import axios from 'axios'
 Vue.prototype.$ajax = axios
