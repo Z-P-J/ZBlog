@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpj.blog.mapper.HomeMapper">
+
+    <resultMap id="ArticleInfoResultMap" type="com.zpj.blog.entity.ArticleInfo">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="post_time" jdbcType="DATE" property="postTime"/>
+        <result column="comment_count" jdbcType="INTEGER" property="commentCount"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <!--        <association property="tags" column="tag" select="com.zpj.blog.mapper.HomeMapper.getTags">-->
+        <!--            <result column="tag"/>-->
+        <!--        </association>-->
+        <collection property="tags" javaType="java.util.List" resultMap="TagResult"/>
+    </resultMap>
+
+    <resultMap id="TagResult" type="String">
+        <result column="tag"/>
+    </resultMap>
+
+<!--    <resultMap id="TagResult" type="com.zpj.blog.entity.ArticleTag">-->
+<!--        <id property="articleId" column="article_id"/>-->
+<!--        <result property="tag" column="tag"/>-->
+<!--    </resultMap>-->
+
+    <select id="getInfoById" resultType="com.zpj.blog.entity.ArticleInfo">
+        select * from article_info where id = #{id}
+    </select>
+
+    <select id="listArticle" resultMap="ArticleInfoResultMap">
+        select ai.*, t.tag from article_info ai
+            left join article_tag t on t.article_id = ai.id
+</select>
+
+<!--    <select id="getTags" resultType="com.zpj.blog.entity.ArticleTag">-->
+<!--        select * from article_tag where id= #{id}-->
+<!--    </select>-->
+
+</mapper>

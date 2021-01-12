@@ -1,9 +1,9 @@
 <template>
-  <div style="overflow:auto;overflow-x: hidden !important;">
+  <div style="overflow: auto; overflow-x: hidden !important">
     <Header></Header>
     <el-container class="main-container">
       <About></About>
-      <el-main style="padding: 0 20px;">
+      <el-main style="padding: 0 20px">
         <div class="blog-list">
           <ul class="list-article">
             <li
@@ -33,26 +33,26 @@
               <div class="article-footer">
                 <span class="iconfont icon-riqi icons">
                   <span class="content">{{
-                    article.post_time | formatDate("yyyy-MM-dd")
+                    article.postTime | formatDate("yyyy-MM-dd")
                   }}</span>
                 </span>
                 <span class="iconfont icon-chakantiezihuifu icons">
-                  <span class="content">{{ article.comment_count }}评论</span>
+                  <span class="content">{{ article.commentCount }}评论</span>
                 </span>
                 <span class="iconfont icon-yanjing icons">
-                  <span class="content">{{ article.view }}阅读量</span>
+                  <span class="content">{{ article.viewCount }}阅读量</span>
                 </span>
               </div>
             </li>
           </ul>
         </div>
         <el-pagination
-          small
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
+          background
           layout="prev, pager, next"
-          :total="count"
-          :page-size="5"
+          :total="totalCount"
+          :page-size="pageSize"
+          :current-page.sync="currentPage"
+          @current-change="get"
           style="text-align: center; margin: 15px auto"
         ></el-pagination>
       </el-main>
@@ -68,121 +68,59 @@ import About from "./about";
 export default {
   data() {
     return {
-      articleList: [
-        {
-          id: 0,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 1,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 2,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 3,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 4,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 5,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 6,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 7,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 8,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-        {
-          id: 9,
-          title: "TitleTitleTitleTitleTitle",
-          tags: ["Tag1", "Tag2"],
-          summary:
-            "summarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummarysummary",
-          post_time: "post_time",
-          comment_count: 100,
-          view: 1000,
-        },
-      ],
+      articleList: [],
       flag: 0,
       pageNum: 1,
       pageSize: 5,
-      count: 0,
+      totalCount: 0,
+      currentPage: 0,
     };
   },
   components: { Header, Footer, About },
-  methods: {},
+  methods: {
+    get(page) {
+      console.log("page=" + page);
+      this.$ajax("http://localhost:8080/list_article?page=" + page)
+      .then((res) => {
+      //   {
+      //   total: 14,
+      //   pageNum: 1,
+      //   pageSize: 5,
+      //   size: 3,
+      //   startRow: 1,
+      //   endRow: 3,
+      //   pages: 3,
+      //   prePage: 0,
+      //   nextPage: 2,
+      //   isFirstPage: true,
+      //   isLastPage: false,
+      //   hasPreviousPage: false,
+      //   hasNextPage: true,
+      //   navigatePages: 8,
+      //   navigatepageNums: [1, 2, 3],
+      //   navigateFirstPage: 1,
+      //   navigateLastPage: 3,
+      // }
+
+        this.articleList = res.data.list;
+        this.pageNum = res.data.pageNum;
+        // this.currentPage = res.data.pageNum;
+        this.pageSize = res.data.pageSize;
+        this.totalCount = res.data.total;
+        console.log(JSON.stringify(res.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  },
+  created() {
+    this.get(1);
+  },
 };
 </script>
 
 <style>
-
 .main-container {
   margin: 100px 10%;
 }
